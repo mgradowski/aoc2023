@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/mgradowski/aoc2023/pkg/day04"
+	"mgradow.ski/aoc2023/pkg/day04"
 )
 
 func main() {
