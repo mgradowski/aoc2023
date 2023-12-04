@@ -63,7 +63,7 @@ func (cards *Cards) Part1() int {
 }
 
 func (cards *Cards) Part2() int {
-	allCards := collections.NewStack[*Card]()
+	allCards := 0
 	copyStack := collections.NewStack[*Card]()
 	copyStack.Push(cards.Cards...)
 	matchCounts := cards.matchCounts()
@@ -73,11 +73,11 @@ func (cards *Cards) Part2() int {
 		if err != nil {
 			break
 		}
-		allCards.Push(card)
+		allCards++
 		copyStack.Push(cards.Cards[card.Id : card.Id+matchCounts[card.Id-1]]...)
 	}
 
-	return allCards.Len()
+	return allCards
 }
 
 func NewParser() *participle.Parser[Cards] {
