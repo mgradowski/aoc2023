@@ -4,7 +4,7 @@ import (
 	"slices"
 
 	"github.com/alecthomas/participle/v2"
-	"github.com/mgradowski/aoc2023/pkg/collections"
+	"mgradow.ski/aoc2023/pkg/collections"
 )
 
 type Card struct {

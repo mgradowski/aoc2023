@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/alecthomas/participle/v2"
-	"github.com/mgradowski/aoc2023/pkg/day02"
+	"mgradow.ski/aoc2023/pkg/day02"
 )
 
 var defaultMaxColors = map[string]int{

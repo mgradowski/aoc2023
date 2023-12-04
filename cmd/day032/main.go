@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/mgradowski/aoc2023/pkg/day03"
+	"mgradow.ski/aoc2023/pkg/day03"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-module github.com/mgradowski/aoc2023
+module mgradow.ski/aoc2023
 
 go 1.21.3
 

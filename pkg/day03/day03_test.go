@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mgradowski/aoc2023/pkg/day03"
+	"mgradow.ski/aoc2023/pkg/day03"
 )
 
 const input = `
