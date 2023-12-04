@@ -17,14 +17,9 @@ type Symbol struct {
 	Pos   lexer.Position
 }
 
-type Chunk struct {
-	LeadingSymbols  []*Symbol `parser:"(@@*"`
-	Number          *Number   `parser:"@@?)!"`
-	TrailingSymbols []*Symbol `parser:"@@*"`
-}
-
 type Schematic struct {
-	Chunks []*Chunk `parser:"@@*"`
+	Numbers []*Number `parser:"( @@   "`
+	Symbols []*Symbol `parser:"| @@ )*"`
 }
 
 type Position struct {
@@ -44,27 +39,6 @@ var positionOffsets = []struct {
 	{-1, +0},
 	{-1, +1},
 	{-1, -1},
-}
-
-func (schematic *Schematic) collectNumbers() (result []*Number) {
-	for _, chunk := range schematic.Chunks {
-		if chunk.Number != nil {
-			result = append(result, chunk.Number)
-		}
-	}
-	return result
-}
-
-func (schematic *Schematic) collectSymbols() (result []*Symbol) {
-	for _, chunk := range schematic.Chunks {
-		for _, symbol := range chunk.LeadingSymbols {
-			result = append(result, symbol)
-		}
-		for _, symbol := range chunk.TrailingSymbols {
-			result = append(result, symbol)
-		}
-	}
-	return result
 }
 
 func buildPositionOffsetMap(numbers []*Number) map[Position]int {
@@ -137,19 +111,15 @@ func calculateGearRatioSum(symbols []*Symbol, positionOffsetMap map[Position]int
 }
 
 func (schematic *Schematic) Part1() (result int) {
-	symbols := schematic.collectSymbols()
-	numbers := schematic.collectNumbers()
-	positionOffsetMap := buildPositionOffsetMap(numbers)
-	offsetValueMap := buildOffsetValueMap(numbers)
-	return calculateLegalValueSum(symbols, positionOffsetMap, offsetValueMap)
+	positionOffsetMap := buildPositionOffsetMap(schematic.Numbers)
+	offsetValueMap := buildOffsetValueMap(schematic.Numbers)
+	return calculateLegalValueSum(schematic.Symbols, positionOffsetMap, offsetValueMap)
 }
 
 func (schematic *Schematic) Part2() int {
-	symbols := schematic.collectSymbols()
-	numbers := schematic.collectNumbers()
-	positionOffsetMap := buildPositionOffsetMap(numbers)
-	offsetValueMap := buildOffsetValueMap(numbers)
-	return calculateGearRatioSum(symbols, positionOffsetMap, offsetValueMap)
+	positionOffsetMap := buildPositionOffsetMap(schematic.Numbers)
+	offsetValueMap := buildOffsetValueMap(schematic.Numbers)
+	return calculateGearRatioSum(schematic.Symbols, positionOffsetMap, offsetValueMap)
 }
 
 func NewParser() *participle.Parser[Schematic] {

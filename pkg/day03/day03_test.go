@@ -43,21 +43,14 @@ func TestLexer(t *testing.T) {
 }
 
 func TestParser(t *testing.T) {
-	expectedChunks := []struct {
-		leadingSymbolCount  int
-		trailingSymbolCount int
-		value               string
-	}{
-		{
-			leadingSymbolCount:  0,
-			trailingSymbolCount: 2,
-			value:               "123",
-		},
-		{
-			leadingSymbolCount:  0,
-			trailingSymbolCount: 1,
-			value:               "456",
-		},
+	expectedNumbers := []string{
+		"123",
+		"456",
+	}
+	expectedSymbols := []string{
+		"*",
+		"*",
+		"*",
 	}
 
 	parser := day03.NewParser()
@@ -66,18 +59,39 @@ func TestParser(t *testing.T) {
 		t.Error(err)
 	}
 
-	if nchunks := len(schematic.Chunks); nchunks != 2 {
-		t.Errorf("expected 2 chunks; got %d", nchunks)
+	if len(schematic.Numbers) != len(expectedNumbers) {
+		t.Errorf(
+			"expected len(schematic.Numbers) to be %d; got %d",
+			len(expectedNumbers),
+			len(schematic.Numbers),
+		)
 	}
-	for i, expectedChunk := range expectedChunks {
-		if nleadingsymbols := len(schematic.Chunks[i].LeadingSymbols); nleadingsymbols != expectedChunk.leadingSymbolCount {
-			t.Errorf("expected %d leading symbols in chunk %d; got %d", expectedChunk.leadingSymbolCount, i, nleadingsymbols)
+	for i, expectedNumber := range expectedNumbers {
+		if schematic.Numbers[i].Value != expectedNumber {
+			t.Errorf(
+				"expected number %d to be %s; got %s",
+				i,
+				expectedNumber,
+				schematic.Numbers[i].Value,
+			)
 		}
-		if ntrailingsymbols := len(schematic.Chunks[i].TrailingSymbols); ntrailingsymbols != expectedChunk.trailingSymbolCount {
-			t.Errorf("expected %d trailing symbols in chunk %d; got %d", expectedChunk.trailingSymbolCount, i, ntrailingsymbols)
-		}
-		if value := schematic.Chunks[i].Number.Value; value != expectedChunk.value {
-			t.Errorf("expected value in chunk %d to be %s; got %s", i, expectedChunk.value, value)
+	}
+
+	if len(schematic.Symbols) != len(expectedSymbols) {
+		t.Errorf(
+			"expected len(schematic.Symbols) to be %d; got %d",
+			len(expectedSymbols),
+			len(schematic.Symbols),
+		)
+	}
+	for i, expectedSymbol := range expectedSymbols {
+		if schematic.Symbols[i].Value != expectedSymbol {
+			t.Errorf(
+				"expected symbol %d to be %s; got %s",
+				i,
+				expectedSymbol,
+				schematic.Symbols[i].Value,
+			)
 		}
 	}
 }
