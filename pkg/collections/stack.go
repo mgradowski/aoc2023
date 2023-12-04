@@ -9,8 +9,8 @@ type Stack[T any] struct {
 	len int
 }
 
-func NewStack[T any]() Stack[T] {
-	return Stack[T]{}
+func NewStack[T any]() *Stack[T] {
+	return new(Stack[T])
 }
 
 func (stack *Stack[T]) Push(els ...T) {
