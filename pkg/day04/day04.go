@@ -74,9 +74,7 @@ func (cards *Cards) Part2() int {
 			break
 		}
 		allCards.Push(card)
-		for i, matchCount := 0, matchCounts[card.Id-1]; i < matchCount; i++ {
-			copyStack.Push(cards.Cards[card.Id+i])
-		}
+		copyStack.Push(cards.Cards[card.Id : card.Id+matchCounts[card.Id-1]]...)
 	}
 
 	return allCards.Len()
